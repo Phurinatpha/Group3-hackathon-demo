@@ -6,9 +6,6 @@
     app:startDestination="@+id/navigation_home">
 
 
-
-
-
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.demo.ui.home.HomeFragment"
@@ -21,11 +18,7 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
-    <fragment
-        android:id="@+id/navigation_scan"
-        android:name="com.example.demo.ui.scan.ScanFragment"
-        android:label="@string/title_scan"
-        tools:layout="@layout/fragment_scan" />
+
 
     <fragment
         android:id="@+id/navigation_cart"
