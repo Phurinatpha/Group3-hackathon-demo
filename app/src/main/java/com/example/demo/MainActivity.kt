@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        testapigetsku("2502009951898", ::getSkuSuccess)
+
 
 
         val navView: BottomNavigationView = binding.navView
@@ -52,10 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getSkuSuccess(sku: String) {
-        println("here get sku =" + sku)
-        testapi(sku)
-    }
+
 
     private fun testpostapi(){
         val payload = "test payload"
@@ -88,81 +85,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun testapi(sku : String ){
-        data class  status(
-            val code : Int,
-            val message : String
-        )
 
-        data class list_img(
-            val url: String
-        )
-
-        data class regularPrice(
-            val value :String,
-            val currency : String
-        )
-
-        data class  finalPrice(
-            val value :String,
-            val currency : String
-        )
-
-        data class discount(
-            val amountOff : String,
-            val percentOff : String
-        )
-        data class minimumPrice(
-            val regularPrice : regularPrice,
-            val finalPrice : finalPrice,
-            val discount : discount
-        )
-
-        data class promotion_url(
-            val image : String
-        )
-
-        data class Detail(
-            val title : String,
-            val content : String
-        )
-
-        data class Data(
-            val id : Int,
-            val sku : String,
-            val name : String,
-            val mediaGallery : Array<list_img>,
-            val priceRange : minimumPrice,
-            val promotions : Array<promotion_url>,
-            val tabs : Array<Detail>
-
-        )
-
-        data class TestModel(
-            val status: status,
-            val data: Data
-        )
-        var url_data = "https://ppe-api.lotuss.com/proc/product/api/v1/products/details?websiteCode=thailand_hy&storeId=5016&sku="+sku
-        val request = Request.Builder()
-            .url(url_data)
-            .addHeader("accept-language", "th")
-            .addHeader("Authorization", "Basic ZWY4ZTZjMjgzODdlNGVjYTlkM2UxMTU1MDQxMjgyYzE6MEU1NTg0QzUxZTdBNDBEODkzMDUxZGExY2NEQTg2ZTY=")
-            .build()
-        client.newCall(request).enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response){
-                val gson = Gson()
-                val tex = response.body?.string()
-                val testModel = gson.fromJson(tex, TestModel::class.java)
-                if (testModel != null) {
-                    println(testModel)
-                }else {
-                    println(tex)
-                }
-            }
-
-        })
-    }
 
 //    private fun testapigetcustomer(){
 //        var str_pnum = "66810000001"
@@ -186,31 +109,7 @@ class MainActivity : AppCompatActivity() {
 //        })
 //    }
 
-    private fun testapigetsku(str_bar: String, callback: (String) -> Unit) {
-        data class Model(
-            val barcode: String,
-            val sku : String
-        )
-        var sku_u : String
-        var url_bar = "https://script.google.com/macros/s/AKfycbwBJ4REN3fhSb1_KSDMATnGXUHzHMmt9Wh-xHFViLqhzk4Lac3xDLlnZKtPBK1lTzJd/exec?topic=barcode&data="+str_bar
-        val request = Request.Builder()
-            .url(url_bar)
-            .build()
-        client.newCall(request).enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response)  {
-                val tex = response.body?.string()
-                val gson = Gson()
-                val model = gson.fromJson(tex, Model::class.java)
-                if (model != null) {
-                    //println(model)
-                    sku_u = model.sku
-                    callback(sku_u)
-                }
-            }
 
-        })
-    }
 
 }
 
